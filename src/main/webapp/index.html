@@ -1,0 +1,78 @@
+<!doctype html>
+<html ng-app="jenkinsApp">
+    <head>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>tovarich2 Jenkins Metadata</title>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+        <script src="js/controllers.js"></script>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+              integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+              crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+              integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
+              crossorigin="anonymous">
+    </head>
+    <body ng-controller="JenkinsListCtrl">
+        <div class="container-fluid col-md-8 col-md-offset-2">
+            <h2>Job ↔ VMs Mapping</h2>
+            <table class="table table-hover table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Job</th>
+                        <th>VMs</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="job_vm in job_vms | orderBy:'job' ">
+                        <td><a target="_blank" href="http://tovarich2.usersys.redhat.com/jenkins/job/{{job_vm.job}}">{{job_vm.job}}</a></td>
+                        <td>
+                            <div ng-repeat="vm in job_vm.vms">
+                            <a target="_blank" href="http://tovarich2.usersys.redhat.com/jenkins/computer/{{vm}}">{{vm}}</a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2>VM ↔ Jobs Mapping</h2>
+            <table class="table table-hover table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>VM</th>
+                    <th>Jobs</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="vm_job in vm_jobs | orderBy:'vm' ">
+                    <td><a target="_blank" href="http://tovarich2.usersys.redhat.com/jenkins/computer/{{vm_job.vm}}">{{vm_job.vm}}</a></td>
+                    <td>
+                        <div ng-repeat="job in vm_job.jobs">
+                            <a target="_blank" href="http://tovarich2.usersys.redhat.com/jenkins/job/{{job}}">{{job}}</a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <h2>Unused VMs</h2>
+            <table class="table table-hover table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Unused VM</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="unused_vm in unused_vms | orderBy:'toString()' ">
+                    <td><a target="_blank" href="http://tovarich2.usersys.redhat.com/jenkins/computer/{{unused_vm}}">{{unused_vm}}</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>
+
